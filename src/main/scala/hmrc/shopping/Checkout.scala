@@ -1,7 +1,9 @@
 package hmrc.shopping
 
 object Checkout {
-  def calculatePrice(items: List[Item]): Price = Price.zero
+  val applePrice = Price(60)
+
+  def calculatePrice(items: List[Item]): Price = applePrice * items.size
 }
 
 
