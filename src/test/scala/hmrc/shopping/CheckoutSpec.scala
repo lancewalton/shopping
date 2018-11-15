@@ -8,9 +8,16 @@ class CheckoutSpec extends FlatSpec with MustMatchers with GeneratorDrivenProper
     Checkout.calculatePrice(Nil) must be(Price.zero)
   }
 
+  it must "correctly discount apples" in {
+    forAll (nForMDiscountItemCountGen(2, 1, Item.Apple)) {
+      case NForMDiscountItems(multiples, additional, apples) ⇒
+        Checkout.calculatePrice(apples) must be(Checkout.applePrice * multiples + Checkout.applePrice * additional)
+    }
+  }
+
   it must "correctly calculate the price of a basket with a mixture of apples and oranges" in {
     forAll (itemListGen(Item.Apple), itemListGen(Item.Orange)) { (apples, oranges) ⇒
-      Checkout.calculatePrice(apples ::: oranges) must be(Checkout.applePrice * apples.size + Checkout.orangePrice * oranges.size)
+      Checkout.calculatePrice(apples ::: oranges) must be(Checkout.calculatePrice(apples) + Checkout.calculatePrice(oranges))
     }
   }
 }
