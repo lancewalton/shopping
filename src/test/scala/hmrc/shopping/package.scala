@@ -9,7 +9,7 @@ package object shopping {
 
   def nForMDiscountItemCountGen(n: Int, m: Int, item: Item): Gen[NForMDiscountItems] =
     for {
-      multiples ← Gen.chooseNum(0, 100)
+      multiples ← Gen.chooseNum(0, 4)
       additional ← Gen.chooseNum(0, n - 1)
     } yield NForMDiscountItems(multiples, additional, List.empty[Item].padTo(multiples * n + additional, item))
 }

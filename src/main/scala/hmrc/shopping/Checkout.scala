@@ -9,7 +9,7 @@ object Checkout {
   def calculatePrice(items: List[Item]): Price = items.groupBy(identity).mapValues(_.size).foldLeft(Price.zero) { case (total, (item, number)) ⇒
     val itemPrice = item match {
       case Apple => applePrice * (number / 2 + number % 2)
-      case Orange => orangePrice * number
+      case Orange => orangePrice * (number / 3 * 2 + number % 3)
     }
 
     total + itemPrice
